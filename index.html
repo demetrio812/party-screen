@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark">
+<title>Level Eleven · Party desk</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Ctext y='34' font-size='36'%3E✦%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+<script src="moments.js" defer></script><script src="celebrations.js" defer></script><script src="app.js" defer></script><script src="phone-bridge.js" defer></script>
+</head>
+<body>
+<main>
+<section class="stage" id="stage" aria-label="Party projection" data-mode="idle">
+ <canvas id="lights" aria-hidden="true"></canvas><div class="grain"></div>
+ <div class="topline"><div class="tour"><span class="star">✦</span><span>Birthday world tour</span></div><span id="stage-status"><i class="live-dot"></i>Ready when you are</span></div>
+ <div class="headline" id="headline"><p class="intro" id="intro">Your night. Your stage.</p><h1 id="title">LEVEL
+ELEVEN</h1><p class="subline" id="subtitle">Your birthday world tour</p></div>
+ <div class="bottomline"><span>THE DANCE FLOOR IS YOURS</span><span>★ &nbsp; ONE NIGHT ONLY &nbsp; ★</span></div>
+ <button id="leave-projector" class="exit-stage">Show controls · Esc</button>
+</section>
+<aside class="panel" aria-label="Party admin">
+ <div class="desk-header"><header><h2>Party desk <span class="star">✦</span></h2><span class="badge">Level Eleven</span></header><p>Your moments. Your music. Your show.</p>
+ <div class="tabs" role="tablist" aria-label="Admin views"><button id="run-tab" role="tab" aria-selected="true" aria-controls="run-view">Run party</button><button id="edit-tab" role="tab" aria-selected="false" aria-controls="edit-view" tabindex="-1">Edit moments</button></div></div>
+ <div id="run-view" role="tabpanel" aria-labelledby="run-tab">
+ <section>
+  <div class="live-strip"><div><span class="live-label">On screen</span><strong id="current-name">Welcome</strong><div class="return-note" id="return-note"></div></div><button id="return-moment" class="small" hidden>Return now</button></div>
+  <h3>Choose a moment</h3><div id="moments-grid" class="moments-grid"></div>
+  <p class="footnote">Each button changes the words, colours, lettering and lights together.</p>
+ </section>
+ <section>
+  <h3>Fire an effect</h3><div class="fx-buttons"><button data-fire="confetti">✦ Confetti</button><button data-fire="stars">☆ Stars</button><button data-fire="tunnel">◎ Tunnel</button><button data-fire="lasers">⌁ Laser fans</button><button data-fire="sparks">✺ Sparks</button><button data-fire="hearts">♡ Hearts</button><button data-fire="ribbons">〰 Ribbons</button><button id="clear-effects">Clear effects</button></div>
+  <p class="footnote" id="fx-status" role="status">A quick burst over the current scene.</p>
+ </section>
+ <section>
+  <h3>Follow the music</h3><div class="sound-row"><button id="listen" class="primary" aria-pressed="false">Listen to speakers</button><button id="demo" class="small" aria-pressed="false">Try preview</button></div>
+  <div class="meter-wrap"><div class="meter" role="meter" aria-label="Microphone level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="meter-fill"></i></div><output id="meter-value" aria-live="off">0%</output></div>
+  <div id="status" class="status" role="status">Microphone off. You control the music independently.</div>
+  <details class="sound-details"><summary>Sound &amp; motion settings</summary><div><label for="device">Microphone</label><select id="device"><option value="">Default microphone</option></select>
+  <div class="range-label"><label for="sensitivity">Sensitivity</label><output id="sensitivity-value">50%</output></div><input id="sensitivity" type="range" min="0" max="100" value="50">
+  <label class="check"><input id="gentle" type="checkbox">Gentle motion for every moment</label></div></details>
+ </section>
+ <section><h3>Phone control</h3><p id="phone-connection" role="status">Connecting…</p><div id="phone-links" class="phone-links"></div><p>Pairing code: <strong id="phone-pin" style="font-size:24px;letter-spacing:.15em">—</strong></p><p id="phone-help">Getting the phone address…</p></section><section class="projection-actions"><button id="open-screen" class="primary wide">Open projection window</button><button id="project" class="wide">Fill this screen instead</button><p class="footnote" id="projection-note">Move the projection window onto the projector. Keep this admin on your laptop to run the show.</p></section>
+ </div>
+ <div id="edit-view" role="tabpanel" aria-labelledby="edit-tab" hidden>
+  <div class="editor-bar"><h3>Moment library</h3><button id="add-moment" class="small">+ New moment</button></div>
+  <label for="moment-select">Choose a moment to edit</label><select id="moment-select"></select>
+  <div class="editor-actions"><button id="move-up">Move up</button><button id="move-down">Move down</button><button id="duplicate-moment">Duplicate</button><button id="delete-moment">Delete</button></div>
+  <p class="editor-hint">Changes stay in this editor until you save. Saving won’t change what’s on the big screen.</p>
+  <form id="moment-form">
+  <label for="edit-name">Moment name</label><input id="edit-name" type="text" maxlength="48" required>
+  <div id="editor-preview" class="editor-preview" aria-label="Moment design preview"><small id="preview-intro"></small><strong id="preview-words"></strong><span id="preview-tagline"></span></div>
+  <label for="edit-message">Main words</label><textarea id="edit-message" maxlength="65" rows="2" required></textarea>
+  <label for="edit-intro">Line above</label><input id="edit-intro" type="text" maxlength="90">
+  <label for="edit-tagline">Line below</label><input id="edit-tagline" type="text" maxlength="80">
+  <div class="field-row"><div><label for="edit-palette">Colour palette</label><select id="edit-palette"></select></div><div><label for="edit-typeface">Lettering</label><select id="edit-typeface"></select></div></div>
+  <label for="edit-effect">Light effects</label><select id="edit-effect"></select>
+  <div class="range-label"><label for="edit-intensity">Effect strength</label><output id="edit-intensity-value">65%</output></div><input id="edit-intensity" type="range" min="0" max="100" value="65">
+  <div class="field-row"><div><label for="edit-kind">Moment type</label><select id="edit-kind"><option value="scene">Words &amp; lights</option><option value="countdown">3, 2, 1 countdown</option></select></div><div><label for="edit-duration">Return after (seconds)</label><input id="edit-duration" type="number" min="0" max="300" step="1" value="0"></div></div>
+  <p class="footnote" id="duration-help">0 keeps this moment on screen until you choose another.</p>
+  <fieldset class="celebration-fields"><legend>Celebration on launch</legend>
+  <label for="edit-celebration">Extra effect</label><select id="edit-celebration"></select>
+  <div class="field-row"><div><label for="edit-burstDuration">Lasts (seconds)</label><input id="edit-burstDuration" type="number" min="3" max="15" step="1"></div><div><label for="edit-amount">Amount</label><input id="edit-amount" type="range" min="10" max="100"></div></div>
+  <label for="edit-speed">Speed</label><input id="edit-speed" type="range" min="50" max="150" step="5">
+  <p class="footnote">Uses this moment’s colours. Gentle motion softens every effect.</p>
+  </fieldset>
+  <div class="save-row"><button type="submit" class="primary" id="save-moment">Save moment</button><button type="button" id="save-launch">Save &amp; launch</button></div>
+  </form>
+  <div id="editor-notice" class="notice" role="status"></div>
+  <div class="backup-tools"><h3>Keep your moments</h3><div class="row"><button id="export-moments" class="small">Download backup</button><button id="import-moments" class="small">Restore backup</button></div><input id="import-file" type="file" accept="application/json,.json" hidden>
+  <div id="restore-review" hidden><p id="restore-description"></p><div class="row"><button id="confirm-restore" class="small">Replace library</button><button id="cancel-restore" class="small">Cancel</button></div></div>
+  <p>Saved in this browser on this laptop. Download a backup to keep a copy or move to another browser.</p></div>
+ </div>
+ <p class="admin-footer">The mic drives the lights only. Audio isn’t recorded, uploaded or played back. Use Phone control to launch moments and effects from the same Wi-Fi.</p>
+</aside>
+</main>
+</body>
+</html>

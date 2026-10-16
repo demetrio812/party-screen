@@ -1,0 +1,19 @@
+'use strict';
+const $=id=>document.getElementById(id);let token=sessionStorage.getItem('party-phone-token')||'',online=false,busy=false,signature='',pending=null;
+function paired(){const yes=!!token;$('pair-form').hidden=yes;$('controls').hidden=!yes;$('disconnect').hidden=!yes}
+async function api(path,body){const r=await fetch(path,{method:body?'POST':'GET',headers:{...(body?{'Content-Type':'application/json'}:{}),Authorization:'Bearer '+token},...(body?{body:JSON.stringify(body)}:{})});const data=await r.json();if(!r.ok){if(r.status===401&&path!=='/api/join'){token='';sessionStorage.removeItem('party-phone-token');paired()}throw Error(data.error||'Could not connect.')}return data}
+function enable(){document.querySelectorAll('#controls button').forEach(b=>b.disabled=!online||!!pending)}
+$('pair-form').addEventListener('submit',async e=>{e.preventDefault();$('join').disabled=true;try{const data=await api('/api/join',{pin:$('pin').value});token=data.token;sessionStorage.setItem('party-phone-token',token);paired();poll()}catch(error){$('connection').textContent=error.message}finally{$('join').disabled=false}});
+$('disconnect').addEventListener('click',()=>{token='';sessionStorage.removeItem('party-phone-token');pending=null;paired();$('connection').textContent='Phone unpaired.'});
+async function command(command,value=''){if(!online||pending)return;const id=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);pending={id,at:Date.now()};enable();$('feedback').textContent='Sending…';try{await api('/api/command',{id,command,value})}catch(error){pending=null;$('feedback').textContent=error.message;enable()}}
+function render(state){const key=JSON.stringify([state.moments,state.effects]);if(key!==signature){signature=key;$('remote-moments').replaceChildren();$('remote-effects').replaceChildren();
+ for(const m of state.moments||[]){const b=document.createElement('button');b.dataset.moment=m.id;const strong=document.createElement('strong');strong.textContent=m.name;const small=document.createElement('small');small.textContent=m.kind==='countdown'?'3, 2, 1…':m.duration?m.duration+' seconds':'Stay on screen';b.append(strong,small);b.addEventListener('click',()=>command('moment',m.id));$('remote-moments').append(b)}
+ for(const [id,name] of Object.entries(state.effects||{})){if(id==='none')continue;const b=document.createElement('button');b.textContent=name;b.dataset.effect=id;b.addEventListener('click',()=>command('effect',id));$('remote-effects').append(b)}
+ }
+ $('now').textContent=state.playback?.scene?.name||'Waiting for laptop';const back=state.playback?.returnScene;$('return').hidden=!back;$('return-note').textContent=back?'Then back to '+back.name:'Stays until you choose another moment';
+ document.querySelectorAll('[data-moment]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.moment===state.playback?.scene?.id)));
+ if(pending){const ack=(state.acks||[]).find(a=>a.id===pending.id);if(ack){$('feedback').textContent=ack.error||'Done — on the big screen.';pending=null}else if(Date.now()-pending.at>7000){$('feedback').textContent='No confirmation from the laptop. Check the screen before trying again.';pending=null}}
+ enable();
+}
+async function poll(){if(!token||busy)return;busy=true;try{const data=await api('/api/state');online=data.online;$('connection').textContent=online?'Connected to Party desk':'Laptop offline — open Party desk to reconnect.';render(data.state||{})}catch(error){online=false;$('connection').textContent=error.message==='Failed to fetch'?'Connection lost. Check Wi-Fi and keep the laptop awake.':error.message;enable()}finally{busy=false}}
+$('clear').addEventListener('click',()=>command('clear'));$('return').addEventListener('click',()=>command('return'));paired();poll();setInterval(poll,600);document.addEventListener('visibilitychange',()=>{if(!document.hidden)poll()});

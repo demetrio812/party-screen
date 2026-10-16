@@ -1,0 +1,47 @@
+LEVEL ELEVEN — PARTY DESK
+
+Double-click Start Party Screen.command. Keep its window open while using the screen.
+
+RUN THE PARTY
+1. Play Spotify normally through your speaker. You control the music independently.
+2. In Run party, choose a moment. Each button changes the words, colours, lettering, lighting and effect strength together.
+3. Choose Listen to speakers and allow microphone access. The laptop microphone drives the lights without playing the microphone back.
+4. Open Sound & motion settings to choose the input, adjust sensitivity or use gentle motion.
+5. Try preview gives a simulated visual rhythm without music or microphone access.
+
+CONTROL FROM YOUR PHONE
+Restart Start Party Screen.command after this update. In Party desk, scroll to Phone control. Connect your phone to the same Wi-Fi as the laptop, open the displayed address in Safari or Chrome, then enter the six-digit code. The code changes whenever the server restarts.
+
+Your phone can launch any saved moment, fire all seven celebration effects, clear effects, and return from a timed moment. The page shows the current moment and confirms when the laptop has handled your command. Editing the library and starting the microphone stay on the laptop. Changes to the saved moment library appear on the phone automatically.
+
+Keep the laptop awake with one Party desk admin open. If the connection drops, controls disable and reconnect automatically. After a server restart, pair again with the new code. If the phone page cannot open, check that both devices use the same Wi-Fi, allow local network/incoming connections if macOS asks, and avoid a guest network that isolates devices. This is a local Wi-Fi controller, not an internet-hosted site.
+
+PROJECT THE SHOW
+Choose Open projection window. Move that window onto the projector (use an extended display rather than mirroring). Click Full screen inside it, or press F. Keep Party desk visible on the laptop to launch moments and control the microphone. Use one Party desk admin window; the second window should be the projection.
+
+The windows link automatically in the same browser on this laptop. If popups are blocked, allow them for this local page. Chrome is recommended for the first room test.
+
+For a single-screen test, choose Fill this screen instead. Esc brings the controls back.
+
+CELEBRATION EFFECTS
+Use Fire an effect in Run party to launch confetti cannons, a star shower, a light tunnel, laser fans, spark fountains, floating hearts or ribbon streamers over the current scene. Clear effects stops the celebration layer immediately; the scene lighting keeps running. Each new moment replaces the previous celebration.
+
+In Edit moments, Celebration on launch selects an automatic effect and its duration, amount and speed. It uses the moment palette. Saving leaves the show unchanged; launching fires the effect. Birthday starts with confetti, Hands in the air with stars, and Countdown with a light tunnel. Older moment backups remain compatible.
+
+EDIT MOMENTS
+Open Edit moments. Choose a moment to edit, or create a new one. Set the words, palette, lettering, effect and strength. The small preview shows your draft.
+
+Return after 0 seconds means stay on screen until another moment is launched. A positive duration returns to the previous held scene. Countdown runs 3, 2, 1, LET'S GO! and returns after 5 seconds.
+
+Save moment changes the library and leaves the live screen alone. Save & launch saves and immediately shows it. You can duplicate, reorder and delete moments. Deleting a moment leaves the current screen playing until you choose another.
+
+Saved moments remain in this browser at this local address. Download backup saves a JSON copy. Restore backup checks the file and asks before replacing your library; the live screen stays unchanged. Unsaved edits are not included in backups.
+
+ABOUT THE SOUND
+The microphone feeds visual effects only. Audio is not recorded, uploaded or played back. Room conversation and cheers can also move the effects. The screen does not recognise songs, lyrics, choruses or drops. Spotify remains separate. Synthetic voice, automatic games and using the phone as a live microphone are not included in this version.
+
+To stop listening, click Stop listening or close Party desk. To stop the local server, press Control+C in its window.
+
+If macOS opens the launcher as text, open Terminal, type python3 followed by a space, drag server.py into Terminal, and press Return.
+
+Developer checks: node --test tests/moments.test.cjs and python3 tests/server_test.py
