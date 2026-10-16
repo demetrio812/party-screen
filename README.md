@@ -14,6 +14,10 @@ No account, API key, subscription or package installation is required. Music is 
 
 ![Party desk moment editor beside the Level Eleven projection, showing the Birthday scene settings](docs/screenshots/moment-editor.jpg)
 
+**Phone remote** — launch moments and fire effects over the same Wi-Fi. Captured in a browser at phone width.
+
+<img src="docs/screenshots/phone-remote.jpg" alt="Connected phone remote showing the current moment, six moment buttons, seven celebration effects and Clear effects" width="390">
+
 ## What it does
 
 - Six editable starting moments: Welcome, Dance floor, Hands in the air, Make some noise, Birthday and Countdown.
