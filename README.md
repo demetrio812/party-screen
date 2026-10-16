@@ -4,6 +4,16 @@ A local party projection with big typography, sound-reactive lights, editable sc
 
 No account, API key, subscription or package installation is required. Music is played separately in the player of your choice.
 
+## Screenshots
+
+**Birthday projection** — full-screen typography with a confetti celebration.
+
+![Birthday projection with large Happy Birthday lettering and purple and gold confetti](docs/screenshots/birthday-confetti.jpg)
+
+**Moment editor** — customise the words and look of a scene while the current projection stays on screen.
+
+![Party desk moment editor beside the Level Eleven projection, showing the Birthday scene settings](docs/screenshots/moment-editor.jpg)
+
 ## What it does
 
 - Six editable starting moments: Welcome, Dance floor, Hands in the air, Make some noise, Birthday and Countdown.
